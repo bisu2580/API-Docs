@@ -39,6 +39,12 @@
         <a class="nav-item" href="#login">
           &nbsp;&nbsp;&nbsp;Login <span class="nav-badge post">POST</span>
         </a>
+        <a class="nav-item" href="#logout">
+          &nbsp;&nbsp;&nbsp;Logout <span class="nav-badge post">POST</span>
+        </a>
+        <a class="nav-item" href="#get-user">
+          &nbsp;&nbsp;&nbsp;Get User <span class="nav-badge get">GET</span>
+        </a>
       </div>
 
       <div class="nav-section">
@@ -50,21 +56,36 @@
         <a class="nav-item" href="#get-records">
           &nbsp;&nbsp;&nbsp;Get All <span class="nav-badge get">GET</span>
         </a>
+        <a class="nav-item" href="#get-record-id">
+          &nbsp;&nbsp;&nbsp;Get by ID <span class="nav-badge get">GET</span>
+        </a>
         <a class="nav-item" href="#update-record">
           &nbsp;&nbsp;&nbsp;Update <span class="nav-badge patch">PATCH</span>
+        </a>
+        <a class="nav-item" href="#delete-record">
+          &nbsp;&nbsp;&nbsp;Delete <span class="nav-badge delete">DELETE</span>
         </a>
       </div>
 
       <div class="nav-section">
         <div class="nav-label">Users</div>
         <a class="nav-item" href="#users"> 👥 User Management </a>
+        <a class="nav-item" href="#get-all-users">
+          &nbsp;&nbsp;&nbsp;Get All <span class="nav-badge get">GET</span>
+        </a>
+        <a class="nav-item" href="#get-user-id">
+          &nbsp;&nbsp;&nbsp;Get by ID <span class="nav-badge get">GET</span>
+        </a>
+        <a class="nav-item" href="#update-user">
+          &nbsp;&nbsp;&nbsp;Update Role
+          <span class="nav-badge patch">PATCH</span>
+        </a>
         <a class="nav-item" href="#toggle-status">
           &nbsp;&nbsp;&nbsp;Toggle Status
           <span class="nav-badge patch">PATCH</span>
         </a>
-        <a class="nav-item" href="#update-user">
-          &nbsp;&nbsp;&nbsp;Update Profile
-          <span class="nav-badge patch">PATCH</span>
+        <a class="nav-item" href="#delete-user">
+          &nbsp;&nbsp;&nbsp;Delete <span class="nav-badge delete">DELETE</span>
         </a>
       </div>
 
@@ -76,6 +97,12 @@
         </a>
         <a class="nav-item" href="#trends">
           &nbsp;&nbsp;&nbsp;Trends <span class="nav-badge get">GET</span>
+        </a>
+        <a class="nav-item" href="#category-breakdown">
+          &nbsp;&nbsp;&nbsp;Categories <span class="nav-badge get">GET</span>
+        </a>
+        <a class="nav-item" href="#recent-activity">
+          &nbsp;&nbsp;&nbsp;Recent <span class="nav-badge get">GET</span>
         </a>
       </div>
 
@@ -255,6 +282,78 @@
             </div>
           </div>
         </div>
+
+        <!-- Logout -->
+        <div class="endpoint" id="logout">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge POST">POST</span>
+            <span class="endpoint-path">/auth/logout</span>
+            <span class="endpoint-desc">Invalidate session and logout</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="body-grid">
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Request Body</div>
+                  <div class="body-card-badge json">JSON</div>
+                </div>
+                <pre>{
+  <span class="key">"refreshToken"</span>: <span class="str">"eyJo..."</span>
+}</pre>
+              </div>
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"message"</span>: <span class="str">"User logged out successfully"</span>
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Get User -->
+        <div class="endpoint" id="get-user">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge GET">GET</span>
+            <span class="endpoint-path">/auth/get-user</span>
+            <span class="endpoint-desc"
+              >Get current authenticated user details</span
+            >
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Authorization</span>
+              <span class="role-badge" style="background: var(--accent4)"
+                >Bearer Token Required</span
+              >
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"user"</span>: {
+    <span class="key">"_id"</span>: <span class="str">"67a1b..."</span>,
+    <span class="key">"name"</span>: <span class="str">"John Doe"</span>,
+    <span class="key">"email"</span>: <span class="str">"john@example.com"</span>,
+    <span class="key">"role"</span>: <span class="str">"admin"</span>,
+    <span class="key">"status"</span>: <span class="str">"active"</span>
+  },
+  <span class="key">"message"</span>: <span class="str">"User fetched successfully"</span>
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- ═══ RECORDS ═══ -->
@@ -411,6 +510,76 @@
             </div>
           </div>
         </div>
+
+        <!-- Get Record by ID -->
+        <div class="endpoint" id="get-record-id">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge GET">GET</span>
+            <span class="endpoint-path">/records/get-records/:id</span>
+            <span class="endpoint-desc">Fetch a single record by its ID</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Roles</span>
+              <span class="role-badge admin">Admin</span>
+              <span class="role-badge analyst">Analyst</span>
+              <span class="role-badge viewer">Viewer</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"record"</span>: {
+    <span class="key">"_id"</span>: <span class="str">"67a1b..."</span>,
+    <span class="key">"amount"</span>: <span class="num">1500</span>,
+    <span class="key">"recordType"</span>: <span class="str">"income"</span>,
+    <span class="key">"category"</span>: <span class="str">"Salary"</span>,
+    <span class="key">"date"</span>: <span class="str">"2026-04-05T00:00:00.000Z"</span>,
+    <span class="key">"description"</span>: <span class="str">"Monthly paycheck"</span>,
+    <span class="key">"createdBy"</span>: {
+      <span class="key">"_id"</span>: <span class="str">"..."</span>,
+      <span class="key">"name"</span>: <span class="str">"Admin User"</span>,
+      <span class="key">"email"</span>: <span class="str">"admin@example.com"</span>
+    }
+  }
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Record -->
+        <div class="endpoint" id="delete-record">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge DELETE">DELETE</span>
+            <span class="endpoint-path">/records/delete-record/:id</span>
+            <span class="endpoint-desc">Permanently remove a record</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"message"</span>: <span class="str">"Record deleted successfully"</span>
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- ═══ USERS ═══ -->
@@ -420,6 +589,74 @@
           <div>
             <div class="section-title">User Management</div>
             <div class="section-subtitle">/api/users · Admin only</div>
+          </div>
+        </div>
+
+        <!-- Get All Users -->
+        <div class="endpoint" id="get-all-users">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge GET">GET</span>
+            <span class="endpoint-path">/users/</span>
+            <span class="endpoint-desc"
+              >Fetch list of all registered users</span
+            >
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"count"</span>: <span class="num">2</span>,
+  <span class="key">"users"</span>: [
+    { <span class="key">"_id"</span>: <span class="str">"..."</span>, <span class="key">"name"</span>: <span class="str">"Admin"</span>, <span class="key">"email"</span>: <span class="str">"admin@..."</span>, <span class="key">"role"</span>: <span class="str">"admin"</span> },
+    { <span class="key">"_id"</span>: <span class="str">"..."</span>, <span class="key">"name"</span>: <span class="str">"Analyst"</span>, <span class="key">"email"</span>: <span class="str">"analyst@..."</span>, <span class="key">"role"</span>: <span class="str">"analyst"</span> }
+  ]
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Get User by ID -->
+        <div class="endpoint" id="get-user-id">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge GET">GET</span>
+            <span class="endpoint-path">/users/:id</span>
+            <span class="endpoint-desc">Fetch details of a specific user</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"user"</span>: {
+    <span class="key">"_id"</span>: <span class="str">"..."</span>,
+    <span class="key">"name"</span>: <span class="str">"John Doe"</span>,
+    <span class="key">"email"</span>: <span class="str">"john@..."</span>,
+    <span class="key">"role"</span>: <span class="str">"analyst"</span>,
+    <span class="key">"status"</span>: <span class="str">"active"</span>
+  }
+}</pre>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -485,7 +722,36 @@
                   <div class="body-card-badge json">Schema</div>
                 </div>
                 <pre><span class="str">"admin"</span>    <span class="cmt">// Full CRUD access</span>
-<span class="str">"analyst"</span>  <span class="cmt">// Read + dashboard access</span></pre>
+<span class="str">"analyst"</span>  <span class="cmt">// Read + dashboard access</span>
+<span class="str">"viewer"</span>   <span class="cmt">// Read only access</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete User -->
+        <div class="endpoint" id="delete-user">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge DELETE">DELETE</span>
+            <span class="endpoint-path">/users/:id</span>
+            <span class="endpoint-desc">Permanently remove a user account</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"message"</span>: <span class="str">"User deleted successfully"</span>
+}</pre>
               </div>
             </div>
           </div>
@@ -560,6 +826,78 @@
   <span class="key">"trends"</span>: [
     { <span class="key">"_id"</span>: <span class="str">"2026-03"</span>, <span class="key">"income"</span>: <span class="num">4500</span>, <span class="key">"expense"</span>: <span class="num">1800</span> },
     { <span class="key">"_id"</span>: <span class="str">"2026-04"</span>, <span class="key">"income"</span>: <span class="num">5000</span>, <span class="key">"expense"</span>: <span class="num">2000</span> }
+  ]
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Breakdown -->
+        <div class="endpoint" id="category-breakdown">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge GET">GET</span>
+            <span class="endpoint-path">/dashboard/category-breakdown</span>
+            <span class="endpoint-desc"
+              >Total amounts and counts per category</span
+            >
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+              <span class="role-badge analyst">Analyst</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"breakdown"</span>: [
+    { <span class="key">"_id"</span>: <span class="str">"Salary"</span>, <span class="key">"totalAmount"</span>: <span class="num">5000</span>, <span class="key">"count"</span>: <span class="num">1</span> },
+    { <span class="key">"_id"</span>: <span class="str">"Travel"</span>, <span class="key">"totalAmount"</span>: <span class="num">200</span>, <span class="key">"count"</span>: <span class="num">2</span> }
+  ]
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="endpoint" id="recent-activity">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge GET">GET</span>
+            <span class="endpoint-path">/dashboard/recent</span>
+            <span class="endpoint-desc">Latest 5 financial records</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+              <span class="role-badge analyst">Analyst</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"recentActivity"</span>: [
+    {
+      <span class="key">"_id"</span>: <span class="str">"67a1b..."</span>,
+      <span class="key">"amount"</span>: <span class="num">50</span>,
+      <span class="key">"recordType"</span>: <span class="str">"expenditure"</span>,
+      <span class="key">"category"</span>: <span class="str">"Food"</span>,
+      <span class="key">"date"</span>: <span class="str">"2026-04-05T..."</span>,
+      <span class="key">"createdBy"</span>: { <span class="key">"name"</span>: <span class="str">"Admin"</span>, <span class="key">"email"</span>: <span class="str">"admin@..."</span> }
+    }
   ]
 }</pre>
               </div>
