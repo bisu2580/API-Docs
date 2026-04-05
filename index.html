@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Docs</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ═══════════════ SIDEBAR ═══════════════ -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-mark">API Reference</div>
+        <div class="logo-title">Finance API</div>
+        <span class="logo-version">v1.0.0</span>
+      </div>
+
+      <div class="base-config">
+        <div class="config-label">Base URL</div>
+        <div class="config-url">localhost:5000/api</div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Authentication</div>
+        <a class="nav-item" href="#auth"> 🔐 Auth Flow </a>
+        <a class="nav-item" href="#register">
+          &nbsp;&nbsp;&nbsp;Register <span class="nav-badge post">POST</span>
+        </a>
+        <a class="nav-item" href="#login">
+          &nbsp;&nbsp;&nbsp;Login <span class="nav-badge post">POST</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Records</div>
+        <a class="nav-item" href="#records"> 📊 Financial Records </a>
+        <a class="nav-item" href="#create-record">
+          &nbsp;&nbsp;&nbsp;Create <span class="nav-badge post">POST</span>
+        </a>
+        <a class="nav-item" href="#get-records">
+          &nbsp;&nbsp;&nbsp;Get All <span class="nav-badge get">GET</span>
+        </a>
+        <a class="nav-item" href="#update-record">
+          &nbsp;&nbsp;&nbsp;Update <span class="nav-badge patch">PATCH</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Users</div>
+        <a class="nav-item" href="#users"> 👥 User Management </a>
+        <a class="nav-item" href="#toggle-status">
+          &nbsp;&nbsp;&nbsp;Toggle Status
+          <span class="nav-badge patch">PATCH</span>
+        </a>
+        <a class="nav-item" href="#update-user">
+          &nbsp;&nbsp;&nbsp;Update Profile
+          <span class="nav-badge patch">PATCH</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Analytics</div>
+        <a class="nav-item" href="#dashboard"> 📈 Dashboard </a>
+        <a class="nav-item" href="#summary">
+          &nbsp;&nbsp;&nbsp;Summary <span class="nav-badge get">GET</span>
+        </a>
+        <a class="nav-item" href="#trends">
+          &nbsp;&nbsp;&nbsp;Trends <span class="nav-badge get">GET</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Reference</div>
+        <a class="nav-item" href="#errors"> ⚠️ Error Codes </a>
+      </div>
+    </aside>
+
+    <!-- ═══════════════ MAIN ═══════════════ -->
+    <main class="main">
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-eyebrow">● RESTful API · v1.0.0</div>
+        <h1 class="hero-title">
+          Finance Management<br /><span>API Reference</span>
+        </h1>
+        <p class="hero-desc">
+          Complete reference documentation for all endpoints, request/response
+          schemas, authentication flows, and error handling.
+        </p>
+        <div class="hero-meta">
+          <div class="meta-pill"><span class="dot"></span>JSON</div>
+          <div class="meta-pill">
+            <span class="dot" style="background: var(--accent4)"></span>Bearer
+            Auth
+          </div>
+          <div class="meta-pill">
+            <span class="dot" style="background: var(--accent3)"></span>RBAC
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ AUTH ═══ -->
+      <div class="section" id="auth">
+        <div class="section-header">
+          <div class="section-icon green">🔐</div>
+          <div>
+            <div class="section-title">Authentication Flow</div>
+            <div class="section-subtitle">/api/auth</div>
+          </div>
+        </div>
+
+        <div class="auth-flow">
+          <div class="flow-step">
+            <div class="flow-num">1</div>
+            <div class="flow-name">Register</div>
+            <div class="flow-desc">Create account</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-num">2</div>
+            <div class="flow-name">Login</div>
+            <div class="flow-desc">Get tokens</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-num">3</div>
+            <div class="flow-name">Attach Token</div>
+            <div class="flow-desc">Bearer header</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-num">4</div>
+            <div class="flow-name">Call API</div>
+            <div class="flow-desc">Authorized</div>
+          </div>
+        </div>
+
+        <!-- Register -->
+        <div class="endpoint open" id="register">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge POST">POST</span>
+            <span class="endpoint-path">/auth/register</span>
+            <span class="endpoint-desc">Create a new user account</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="body-grid">
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Request Body</div>
+                  <div class="body-card-badge json">JSON</div>
+                </div>
+                <pre>{
+  <span class="key">"name"</span>: <span class="str">"John Doe"</span>,
+  <span class="key">"email"</span>: <span class="str">"john@example.com"</span>,
+  <span class="key">"password"</span>: <span class="str">"securepassword123"</span>,
+  <span class="key">"role"</span>: <span class="str">"admin"</span>
+}</pre>
+              </div>
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">201 Created</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"message"</span>: <span class="str">"User Registered Successfully"</span>
+}</pre>
+              </div>
+            </div>
+            <div class="params-title">Request Fields</div>
+            <table class="params-table">
+              <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>name</td>
+                <td><span class="param-type">string</span></td>
+                <td>Yes</td>
+                <td>Full display name</td>
+              </tr>
+              <tr>
+                <td>email</td>
+                <td><span class="param-type">string</span></td>
+                <td>Yes</td>
+                <td>Unique email address</td>
+              </tr>
+              <tr>
+                <td>password</td>
+                <td><span class="param-type">string</span></td>
+                <td>Yes</td>
+                <td>Min 8 characters</td>
+              </tr>
+              <tr>
+                <td>role</td>
+                <td><span class="param-type">string</span></td>
+                <td>No</td>
+                <td><code>admin</code> | <code>analyst</code></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Login -->
+        <div class="endpoint" id="login">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge POST">POST</span>
+            <span class="endpoint-path">/auth/login</span>
+            <span class="endpoint-desc">Authenticate and receive tokens</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="body-grid">
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Request Body</div>
+                  <div class="body-card-badge json">JSON</div>
+                </div>
+                <pre>{
+  <span class="key">"name"</span>: <span class="str">"John Doe"</span>,
+  <span class="key">"email"</span>: <span class="str">"john@example.com"</span>,
+  <span class="key">"password"</span>: <span class="str">"securepassword123"</span>
+}</pre>
+              </div>
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"data"</span>: {
+    <span class="key">"user"</span>: {
+      <span class="key">"_id"</span>: <span class="str">"67a1b..."</span>,
+      <span class="key">"name"</span>: <span class="str">"John Doe"</span>,
+      <span class="key">"email"</span>: <span class="str">"john@example.com"</span>,
+      <span class="key">"role"</span>: <span class="str">"admin"</span>,
+      <span class="key">"accessToken"</span>: <span class="str">"eyJh..."</span>,
+      <span class="key">"refreshToken"</span>: <span class="str">"eyJo..."</span>
+    }
+  },
+  <span class="key">"message"</span>: <span class="str">"User logged in successfully"</span>
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ RECORDS ═══ -->
+      <div class="section" id="records">
+        <div class="section-header">
+          <div class="section-icon blue">📊</div>
+          <div>
+            <div class="section-title">Financial Records</div>
+            <div class="section-subtitle">/api/records</div>
+          </div>
+        </div>
+
+        <!-- Create Record -->
+        <div class="endpoint" id="create-record">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge POST">POST</span>
+            <span class="endpoint-path">/records/create-record</span>
+            <span class="endpoint-desc"
+              >Add a new income or expense record</span
+            >
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Request Body</div>
+                  <div class="body-card-badge json">JSON</div>
+                </div>
+                <pre>{
+  <span class="key">"amount"</span>: <span class="num">1500</span>,
+  <span class="key">"recordType"</span>: <span class="str">"income"</span>, <span class="cmt">// or "expenditure"</span>
+  <span class="key">"category"</span>: <span class="str">"Salary"</span>,
+  <span class="key">"date"</span>: <span class="str">"2026-04-05"</span>,
+  <span class="key">"description"</span>: <span class="str">"Monthly paycheck"</span>
+}</pre>
+              </div>
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Field Reference</div>
+                  <div class="body-card-badge json">Schema</div>
+                </div>
+                <pre><span class="key">recordType</span>: <span class="str">"income"</span> | <span class="str">"expenditure"</span>
+<span class="key">amount</span>:     <span class="num">number</span>  <span class="cmt">// positive value</span>
+<span class="key">category</span>:   <span class="str">string</span>  <span class="cmt">// e.g. Salary, Travel</span>
+<span class="key">date</span>:       <span class="str">string</span>  <span class="cmt">// YYYY-MM-DD</span>
+<span class="key">description</span>:<span class="str">string</span>  <span class="cmt">// optional notes</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Get All Records -->
+        <div class="endpoint" id="get-records">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge GET">GET</span>
+            <span class="endpoint-path">/records/get-all-records</span>
+            <span class="endpoint-desc"
+              >Fetch records with filtering &amp; sorting</span
+            >
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="params-title">Query Parameters</div>
+            <table class="params-table">
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>type</td>
+                <td><span class="param-type">string</span></td>
+                <td>No</td>
+                <td><code>income</code> | <code>expenditure</code></td>
+              </tr>
+              <tr>
+                <td>category</td>
+                <td><span class="param-type">string</span></td>
+                <td>No</td>
+                <td>Filter by category, e.g. <code>Travel</code></td>
+              </tr>
+              <tr>
+                <td>startDate</td>
+                <td><span class="param-type">string</span></td>
+                <td>No</td>
+                <td>Format: <code>YYYY-MM-DD</code></td>
+              </tr>
+              <tr>
+                <td>endDate</td>
+                <td><span class="param-type">string</span></td>
+                <td>No</td>
+                <td>Format: <code>YYYY-MM-DD</code></td>
+              </tr>
+              <tr>
+                <td>sortBy</td>
+                <td><span class="param-type">string</span></td>
+                <td>No</td>
+                <td>Field to sort by, e.g. <code>amount</code></td>
+              </tr>
+              <tr>
+                <td>order</td>
+                <td><span class="param-type">string</span></td>
+                <td>No</td>
+                <td>
+                  <code>asc</code> | <code>desc</code> — Default:
+                  <code>desc</code>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Update Record -->
+        <div class="endpoint" id="update-record">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge PATCH">PATCH</span>
+            <span class="endpoint-path">/records/update-record/:id</span>
+            <span class="endpoint-desc"
+              >Partially update an existing record</span
+            >
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Request Body</div>
+                  <div class="body-card-badge json">JSON</div>
+                </div>
+                <pre><span class="cmt">// Any subset of record fields</span>
+{
+  <span class="key">"amount"</span>: <span class="num">2000</span>,
+  <span class="key">"category"</span>: <span class="str">"Freelance"</span>
+}</pre>
+              </div>
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Path Parameters</div>
+                  <div class="body-card-badge json">Params</div>
+                </div>
+                <pre><span class="key">:id</span>  <span class="cmt">// MongoDB ObjectId of the record</span>
+     <span class="cmt">// e.g. 67a1b2c3d4e5f6789abc</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ USERS ═══ -->
+      <div class="section" id="users">
+        <div class="section-header">
+          <div class="section-icon yellow">👥</div>
+          <div>
+            <div class="section-title">User Management</div>
+            <div class="section-subtitle">/api/users · Admin only</div>
+          </div>
+        </div>
+
+        <!-- Toggle Status -->
+        <div class="endpoint" id="toggle-status">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge PATCH">PATCH</span>
+            <span class="endpoint-path">/users/:id/toggle-status</span>
+            <span class="endpoint-desc">Toggle active / inactive status</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"user"</span>: {
+    <span class="key">"_id"</span>: <span class="str">"..."</span>,
+    <span class="key">"status"</span>: <span class="str">"inactive"</span>
+  },
+  <span class="key">"message"</span>: <span class="str">"User status changed to inactive"</span>
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update User -->
+        <div class="endpoint" id="update-user">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge PATCH">PATCH</span>
+            <span class="endpoint-path">/users/:id</span>
+            <span class="endpoint-desc">Update user profile or role</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Request Body</div>
+                  <div class="body-card-badge json">JSON</div>
+                </div>
+                <pre>{
+  <span class="key">"role"</span>: <span class="str">"analyst"</span>,
+  <span class="key">"name"</span>: <span class="str">"Updated Name"</span>
+}</pre>
+              </div>
+              <div class="body-card">
+                <div class="body-card-header">
+                  <div class="body-card-title">Available Roles</div>
+                  <div class="body-card-badge json">Schema</div>
+                </div>
+                <pre><span class="str">"admin"</span>    <span class="cmt">// Full CRUD access</span>
+<span class="str">"analyst"</span>  <span class="cmt">// Read + dashboard access</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ DASHBOARD ═══ -->
+      <div class="section" id="dashboard">
+        <div class="section-header">
+          <div class="section-icon purple">📈</div>
+          <div>
+            <div class="section-title">Dashboard Analytics</div>
+            <div class="section-subtitle">/api/dashboard</div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="endpoint" id="summary">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge GET">GET</span>
+            <span class="endpoint-path">/dashboard/summary</span>
+            <span class="endpoint-desc">Financial totals and net balance</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+              <span class="role-badge analyst">Analyst</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"summary"</span>: {
+    <span class="key">"totalIncome"</span>: <span class="num">5000</span>,
+    <span class="key">"totalExpense"</span>: <span class="num">2000</span>,
+    <span class="key">"netBalance"</span>: <span class="num">3000</span>
+  }
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trends -->
+        <div class="endpoint" id="trends">
+          <div class="endpoint-header" onclick="toggle(this)">
+            <span class="method-badge GET">GET</span>
+            <span class="endpoint-path">/dashboard/trends</span>
+            <span class="endpoint-desc">Monthly income vs expense trends</span>
+            <span class="chevron">▼</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="role-row">
+              <span class="role-label">Required Role</span>
+              <span class="role-badge admin">Admin</span>
+              <span class="role-badge analyst">Analyst</span>
+            </div>
+            <div class="body-grid">
+              <div class="body-card" style="grid-column: 1/-1">
+                <div class="body-card-header">
+                  <div class="body-card-title">Success Response</div>
+                  <div class="body-card-badge ok">200 OK</div>
+                </div>
+                <pre>{
+  <span class="key">"success"</span>: <span class="bool">true</span>,
+  <span class="key">"trends"</span>: [
+    { <span class="key">"_id"</span>: <span class="str">"2026-03"</span>, <span class="key">"income"</span>: <span class="num">4500</span>, <span class="key">"expense"</span>: <span class="num">1800</span> },
+    { <span class="key">"_id"</span>: <span class="str">"2026-04"</span>, <span class="key">"income"</span>: <span class="num">5000</span>, <span class="key">"expense"</span>: <span class="num">2000</span> }
+  ]
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ ERRORS ═══ -->
+      <div class="section" id="errors">
+        <div class="section-header">
+          <div class="section-icon red">⚠️</div>
+          <div>
+            <div class="section-title">Error Responses</div>
+            <div class="section-subtitle">Standardized error format</div>
+          </div>
+        </div>
+
+        <div class="error-example">
+          <div class="error-example-header">Standard Error Envelope</div>
+          <pre>{
+  <span class="key">"success"</span>: <span class="bool">false</span>,
+  <span class="key">"message"</span>: <span class="str">"Detailed error message here"</span>
+}</pre>
+        </div>
+
+        <div class="params-title" style="margin-top: 28px">
+          HTTP Status Codes
+        </div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-code s2">400</div>
+            <div class="status-info">
+              <strong>Bad Request</strong>
+              <p>
+                Missing required fields or validation failure in the request
+                body.
+              </p>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-code s401">401</div>
+            <div class="status-info">
+              <strong>Unauthorized</strong>
+              <p>Missing or invalid Bearer token in Authorization header.</p>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-code s403">403</div>
+            <div class="status-info">
+              <strong>Forbidden</strong>
+              <p>
+                Authenticated user lacks the required role (RBAC enforcement).
+              </p>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-code s4">404</div>
+            <div class="status-info">
+              <strong>Not Found</strong>
+              <p>Resource not found at the specified ID or endpoint path.</p>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-code s5">500</div>
+            <div class="status-info">
+              <strong>Internal Server Error</strong>
+              <p>Unexpected failure on the server side. Check server logs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
